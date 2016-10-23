@@ -1,0 +1,143 @@
+<!--
+   Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 Inc. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<template xmlns="http://ws.apache.org/ns/synapse" name="getOpportunities">
+    <parameter name="createdAfter" description="Selects opportunities that were created after the specified time."/>
+    <parameter name="createdBefore" description="Selects opportunities that were created before the specified time."/>
+    <parameter name="idGreaterThan" description="Selects opportunities with IDs greater than the specified integer."/>
+    <parameter name="idLessThan" description="Selects opportunities with IDs less than the specified integer."/>
+    <parameter name="probabilityGreaterThan" description="Selects opportunities with probabilities greater than the specified number."/>
+    <parameter name="probabilityLessThan" description="Selects opportunities with probabilities less than the specified number."/>
+    <parameter name="valueGreaterThan" description="Selects opportunities that have a value greater than a specified integer."/>
+    <parameter name="valueLessThan" description="Selects opportunities that have a value less than a specified integer."/>
+    <parameter name="prospectEmail" description="Selects opportunities associated with the specified prospect(s)."/>
+    <parameter name="prospectId" description="Selects opportunities associated with the specified prospect."/>
+    <parameter name="limit" description="Specifies the number of results to be returned."/>
+    <parameter name="offset" description="Specifies the first matching opportunity to be returned in the query response."/>
+    <parameter name="sortBy" description="Specifies the field that should be used to sort the results of the query."/>
+    <parameter name="sortOrder" description="Specifies the ordering to be used when sorting the results of the query."/>
+    <parameter name="output" description="Specifies the format to be used when returning the results of the query."/>
+    <sequence>
+        <property name="uri.var.createdAfter" expression="$func:createdAfter"/>
+        <property name="uri.var.createdBefore" expression="$func:createdBefore"/>
+        <property name="uri.var.idGreaterThan" expression="$func:idGreaterThan"/>
+        <property name="uri.var.idLessThan" expression="$func:idLessThan"/>
+        <property name="uri.var.probabilityGreaterThan" expression="$func:probabilityGreaterThan"/>
+        <property name="uri.var.probabilityLessThan" expression="$func:probabilityLessThan"/>
+        <property name="uri.var.valueGreaterThan" expression="$func:valueGreaterThan"/>
+        <property name="uri.var.valueLessThan" expression="$func:valueLessThan"/>
+        <property name="uri.var.prospectEmail" expression="$func:gradeLessThan"/>
+        <property name="uri.var.prospectId" expression="$func:prospectId"/>
+        <property name="uri.var.limit" expression="$func:limit"/>
+        <property name="uri.var.offset" expression="$func:offset"/>
+        <property name="uri.var.sortBy" expression="$func:sortBy"/>
+        <property name="uri.var.sortOrder" expression="$func:sortOrder"/>
+        <property name="uri.var.output" expression="$func:output"/>
+        <script language="js">
+            <![CDATA[
+                var createdAfter=mc.getProperty("uri.var.createdAfter");
+                var createdBefore=mc.getProperty("uri.var.createdBefore");
+                var idGreaterThan = mc.getProperty("uri.var.idGreaterThan");
+                var idLessThan = mc.getProperty("uri.var.idLessThan");
+                var probabilityGreaterThan=mc.getProperty("uri.var.probabilityGreaterThan");
+                var probabilityLessThan=mc.getProperty("uri.var.probabilityLessThan");
+                var valueGreaterThan = mc.getProperty("uri.var.valueGreaterThan");
+                var valueLessThan = mc.getProperty("uri.var.valueLessThan");
+                var prospectEmail=mc.getProperty("uri.var.prospectEmail");
+                var prospectId=mc.getProperty("uri.var.prospectId");
+                var limit = mc.getProperty("uri.var.limit");
+                var offset = mc.getProperty("uri.var.offset");
+                var sortBy = mc.getProperty("uri.var.sortBy");
+                var sortOrder = mc.getProperty("uri.var.sortOrder");
+                var output = mc.getProperty("uri.var.output");
+                var format=mc.getProperty("uri.var.format");
+
+                var urlQuery = '';
+                if (createdAfter != null && createdAfter != ""){
+                   urlQuery += 'created_after=' + createdAfter + '&';
+                }
+                if (createdBefore != null && createdBefore != ""){
+                   urlQuery += 'created_before=' + createdBefore + '&';
+                }
+                if (idGreaterThan != null && idGreaterThan != ""){
+                   urlQuery += 'id_greater_than=' + idGreaterThan + '&';
+                }
+                if (idLessThan != null && idLessThan != ""){
+                   urlQuery += 'id_less_than=' + idLessThan + '&';
+                }
+                if (probabilityGreaterThan != null && probabilityGreaterThan != ""){
+                   urlQuery += 'probability_greater_than=' + probabilityGreaterThan + '&';
+                }
+                if (probabilityLessThan != null && probabilityLessThan != ""){
+                   urlQuery += 'probability_less_than=' + probabilityLessThan + '&';
+                }
+                if (valueGreaterThan != null && valueGreaterThan != ""){
+                   urlQuery += 'value_greater_than=' + valueGreaterThan + '&';
+                }
+                if (valueLessThan != null && valueLessThan != ""){
+                   urlQuery += 'value_less_than=' + valueLessThan + '&';
+                }
+                if (prospectEmail != null && prospectEmail != ""){
+                   urlQuery += 'prospect_email=' + prospectEmail + '&';
+                }
+                if (prospectId != null && prospectId != ""){
+                   urlQuery += 'prospect_id=' + prospectId + '&';
+                }
+                if (limit != null && limit != ""){
+                   urlQuery += 'limit=' + limit + '&';
+                }
+                if (offset != null && offset != ""){
+                   urlQuery += 'offset=' + offset + '&';
+                }
+                if (sortBy != null && sortBy != ""){
+                   urlQuery += 'sort_by=' + sortBy + '&';
+                }
+                if (sortOrder != null && sortOrder != ""){
+                   urlQuery += 'sort_order=' + sortOrder + '&';
+                }
+                if (output != null && output != ""){
+                   urlQuery += 'output=' + output + '&';
+                }
+                if (format != null && format != ""){
+                   urlQuery += 'format=' + format + '&';;
+                }
+                if (urlQuery != null && urlQuery != ""){
+                   urlQuery = '&' + urlQuery.toString().substring(0, urlQuery.toString().lastIndexOf("&"));
+                }
+                mc.setProperty('uri.var.urlQuery',urlQuery);
+            ]]>
+        </script>
+        <filter source="$ctx:pardotBlocking" regex="true">
+            <then>
+                <call>
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/opportunity/version/{uri.var.apiVersion}/do/query?api_key={+uri.var.apiKey}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/opportunity/version/{uri.var.apiVersion}/do/query?api_key={+uri.var.apiKey}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+    </sequence>
+</template>

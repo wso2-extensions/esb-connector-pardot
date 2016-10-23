@@ -1,0 +1,119 @@
+<!--
+   Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 Inc. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<template xmlns="http://ws.apache.org/ns/synapse" name="getCampaigns">
+    <parameter name="createdAfter" description="Selects campaigns that were created after the specified time."/>
+    <parameter name="createdBefore" description="Selects campaigns that were created before the specified time."/>
+    <parameter name="idGreaterThan" description="Selects campaigns with IDs greater than the specified integer."/>
+    <parameter name="idLessThan" description="Selects campaigns with IDs less than the specified integer."/>
+    <parameter name="updatedAfter" description="Selects campaigns that were last updated after the specified time."/>
+    <parameter name="updatedBefore" description="Selects campaigns that were last updated before the specified time."/>
+    <parameter name="name" description="Searches for campaigns a name exactly matching the given name."/>
+    <parameter name="limit" description="Specifies the number of results to be returned."/>
+    <parameter name="offset" description="Specifies the first matching campaign to be returned in the query response."/>
+    <parameter name="sortBy" description="Specifies the field that should be used to sort the results of the query."/>
+    <parameter name="sortOrder" description="Specifies the ordering to be used when sorting the results of the query."/>
+    <sequence>
+        <property name="uri.var.createdAfter" expression="$func:createdAfter"/>
+        <property name="uri.var.createdBefore" expression="$func:createdBefore"/>
+        <property name="uri.var.idGreaterThan" expression="$func:idGreaterThan"/>
+        <property name="uri.var.idLessThan" expression="$func:idLessThan"/>
+        <property name="uri.var.updatedAfter" expression="$func:updatedAfter"/>
+        <property name="uri.var.updatedBefore" expression="$func:updatedBefore"/>
+        <property name="uri.var.name" expression="$func:name"/>
+        <property name="uri.var.limit" expression="$func:limit"/>
+        <property name="uri.var.offset" expression="$func:offset"/>
+        <property name="uri.var.sortBy" expression="$func:sortBy"/>
+        <property name="uri.var.sortOrder" expression="$func:sortOrder"/>
+        <script language="js">
+            <![CDATA[
+                var createdAfter=mc.getProperty("uri.var.createdAfter");
+                var createdBefore=mc.getProperty("uri.var.createdBefore");
+                var idGreaterThan = mc.getProperty("uri.var.idGreaterThan");
+                var idLessThan = mc.getProperty("uri.var.idLessThan");
+                var updatedAfter = mc.getProperty("uri.var.updatedAfter");
+                var updatedBefore=mc.getProperty("uri.var.updatedBefore");
+                var name = mc.getProperty("uri.var.name");
+                var limit = mc.getProperty("uri.var.limit");
+                var offset = mc.getProperty("uri.var.offset");
+                var sortBy = mc.getProperty("uri.var.sortBy");
+                var sortOrder = mc.getProperty("uri.var.sortOrder");
+                var format=mc.getProperty("uri.var.format");
+
+                var urlQuery = '';
+                if (createdAfter != null && createdAfter != ""){
+                   urlQuery += 'created_after=' + createdAfter + '&';
+                }
+                if (createdBefore != null && createdBefore != ""){
+                   urlQuery += 'created_before=' + createdBefore + '&';
+                }
+                if (idGreaterThan != null && idGreaterThan != ""){
+                   urlQuery += 'id_greater_than=' + idGreaterThan + '&';
+                }
+                if (idLessThan != null && idLessThan != ""){
+                   urlQuery += 'id_less_than=' + idLessThan + '&';
+                }
+                if (updatedAfter != null && updatedAfter != ""){
+                   urlQuery += 'updated_after=' + updatedAfter + '&';
+                }
+                if (updatedBefore != null && updatedBefore != ""){
+                   urlQuery += 'updated_before=' + updatedBefore + '&';
+                }
+                if (name != null && name != ""){
+                   urlQuery += 'name=' + name + '&';
+                }
+                if (limit != null && limit != ""){
+                   urlQuery += 'limit=' + limit + '&';
+                }
+                if (offset != null && offset != ""){
+                   urlQuery += 'offset=' + offset + '&';
+                }
+                if (sortBy != null && sortBy != ""){
+                   urlQuery += 'sort_by=' + sortBy + '&';
+                }
+                if (sortOrder != null && sortOrder != ""){
+                   urlQuery += 'sort_order=' + sortOrder + '&';
+                }
+                if (format != null && format != ""){
+                   urlQuery += 'format=' + format + '&';;
+                }
+                if (urlQuery != null && urlQuery != ""){
+                   urlQuery = '&' + urlQuery.toString().substring(0, urlQuery.toString().lastIndexOf("&"));
+                }
+                mc.setProperty('uri.var.urlQuery',urlQuery);
+            ]]>
+        </script>
+        <filter source="$ctx:pardotBlocking" regex="true">
+            <then>
+                <call>
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/campaign/version/{uri.var.apiVersion}/do/query?api_key={+uri.var.apiKey}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/campaign/version/{uri.var.apiVersion}/do/query?api_key={+uri.var.apiKey}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+    </sequence>
+</template>

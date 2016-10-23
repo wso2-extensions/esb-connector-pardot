@@ -1,0 +1,10 @@
+<request>
+    <apiUrl>%s(apiUrl)</apiUrl>
+    <email>%s(email)</email>
+    <password>%s(password)</password>
+    <userKey>%s(userKey)</userKey>
+    <apiVersion>%s(apiVersion)</apiVersion>
+    <sortBy>created_at</sortBy>
+    <sortOrder>descending</sortOrder>
+    <limit>10</limit>
+</request>
