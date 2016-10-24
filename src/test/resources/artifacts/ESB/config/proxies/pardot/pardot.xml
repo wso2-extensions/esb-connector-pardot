@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~  WSO2 Inc. licenses this file to you under the Apache License,
+ ~  Version 2.0 (the "License"); you may not use this file except
+ ~  in compliance with the License.
+ ~  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~  Unless required by applicable law or agreed to in writing,
+ ~  software distributed under the License is distributed on an
+ ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~  KIND, either express or implied.  See the License for the
+ ~  specific language governing permissions and limitations
+ ~  under the License.
+-->
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="pardot" transports="https http"
+       startOnLoad="true">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="apiUrl" expression="//apiUrl"/>
+            <property name="email" expression="//email"/>
+            <property name="password" expression="//password"/>
+            <property name="userKey" expression="//userKey"/>
+            <property name="apiVersion" expression="//apiVersion"/>
+            <property name="createdAfter" expression="//createdAfter"/>
+            <property name="createdBefore" expression="//createdBefore"/>
+            <property name="idGreaterThan" expression="//idGreaterThan"/>
+            <property name="idLessThan" expression="//idLessThan"/>
+            <property name="limit" expression="//limit"/>
+            <property name="offset" expression="//offset"/>
+            <property name="sortBy" expression="//sortBy"/>
+            <property name="sortOrder" expression="//sortOrder"/>
+            <property name="updatedAfter" expression="//updatedAfter"/>
+            <property name="updatedBefore" expression="//updatedBefore"/>
+            <property name="name" expression="//name"/>
+            <property name="idGreaterThan" expression="//idGreaterThan"/>
+            <property name="listEmailId" expression="//listEmailId"/>
+            <property name="dripProgramActionId" expression="//dripProgramActionId"/>
+            <property name="emailTemplateId" expression="//emailTemplateId"/>
+            <property name="trackerRedirectId" expression="//trackerRedirectId"/>
+            <property name="probabilityGreaterThan" expression="//probabilityGreaterThan"/>
+            <property name="probabilityLessThan" expression="//probabilityLessThan"/>
+            <property name="valueGreaterThan" expression="//valueGreaterThan"/>
+            <property name="valueLessThan" expression="//valueLessThan"/>
+            <property name="prospectEmail" expression="//prospectEmail"/>
+            <property name="prospectId" expression="//prospectId"/>
+            <property name="assigned" expression="//assigned"/>
+            <property name="assignedToUser" expression="//assignedToUser"/>
+            <property name="deleted" expression="//deleted"/>
+            <property name="gradeEqualTo" expression="//gradeEqualTo"/>
+            <property name="gradeGreaterThan" expression="//gradeGreaterThan"/>
+            <property name="gradeLessThan" expression="//gradeLessThan"/>
+            <property name="isStarred" expression="//isStarred"/>
+            <property name="lastActivityBefore" expression="//lastActivityBefore"/>
+            <property name="lastActivityAfter" expression="//lastActivityAfter"/>
+            <property name="lastActivityNever" expression="//lastActivityNever"/>
+            <property name="listId" expression="//listId"/>
+            <property name="scoreEqualTo" expression="//scoreEqualTo"/>
+            <property name="scoreGreaterThan" expression="//scoreGreaterThan"/>
+            <property name="scoreLessThan" expression="//scoreLessThan"/>
+            <property name="fields" expression="//fields"/>
+            <property name="prospectOnly" expression="//prospectOnly"/>
+            <property name="type" expression="//type"/>
+            <property name="campaignId" expression="//campaignId"/>
+            <property name="customUrlId" expression="//customUrlId"/>
+            <property name="emailId" expression="//emailId"/>
+            <property name="fileId" expression="//fileId"/>
+            <property name="formId" expression="//formId"/>
+            <property name="formHandlerId" expression="//formHandlerId"/>
+            <property name="landingPageId" expression="//landingPageId"/>
+            <property name="visitorId" expression="//visitorId"/>
+            <property name="onlyIdentified" expression="//onlyIdentified"/>
+            <property name="ids" expression="//ids"/>
+            <property name="visitorIds" expression="//visitorIds"/>
+            <property name="prospectIds" expression="//prospectIds"/>
+            <property name="action" expression="get-property('transport','Action')"/>
+            <pardot.init>
+                <apiUrl>{$ctx:apiUrl}</apiUrl>
+                <email>{$ctx:email}</email>
+                <password>{$ctx:password}</password>
+                <userKey>{$ctx:userKey}</userKey>
+                <apiVersion>{$ctx:apiVersion}</apiVersion>
+                <format>{$ctx:format}</format>
+                <blocking>{$ctx:blocking}</blocking>
+            </pardot.init>
+            <switch source="get-property('action')">
+                <case regex="urn:getUsers">
+                    <pardot.getUsers>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getUsers>
+                </case>
+                <case regex="urn:getCampaigns">
+                    <pardot.getCampaigns>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <name>{$ctx:name}</name>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getCampaigns>
+                </case>
+                <case regex="urn:getEmailClicks">
+                    <pardot.getEmailClicks>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <listEmailId>{$ctx:listEmailId}</listEmailId>
+                        <dripProgramActionId>{$ctx:dripProgramActionId}</dripProgramActionId>
+                        <emailTemplateId>{$ctx:emailTemplateId}</emailTemplateId>
+                        <trackerRedirectId>{$ctx:trackerRedirectId}</trackerRedirectId>
+                        <limit>{$ctx:limit}</limit>
+                    </pardot.getEmailClicks>
+                </case>
+                <case regex="urn:getForms">
+                    <pardot.getForms>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getForms>
+                </case>
+                <case regex="urn:getLifecycleHistories">
+                    <pardot.getLifecycleHistories>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getLifecycleHistories>
+                </case>
+                <case regex="urn:getLifecycleStages">
+                    <pardot.getLifecycleStages>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getLifecycleStages>
+                </case>
+                <case regex="urn:getLists">
+                    <pardot.getLists>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <name>{$ctx:name}</name>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getLists>
+                </case>
+                <case regex="urn:getOpportunities">
+                    <pardot.getOpportunities>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <probabilityGreaterThan>{$ctx:probabilityGreaterThan}</probabilityGreaterThan>
+                        <probabilityLessThan>{$ctx:probabilityLessThan}</probabilityLessThan>
+                        <valueGreaterThan>{$ctx:valueGreaterThan}</valueGreaterThan>
+                        <valueLessThan>{$ctx:valueLessThan}</valueLessThan>
+                        <prospectEmail>{$ctx:prospectEmail}</prospectEmail>
+                        <prospectId>{$ctx:prospectId}</prospectId>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                        <output>{$ctx:output}</output>
+                    </pardot.getOpportunities>
+                </case>
+                <case regex="urn:getProspectAccounts">
+                    <pardot.getProspectAccounts>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <name>{$ctx:name}</name>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getProspectAccounts>
+                </case>
+                <case regex="urn:getProspects">
+                    <pardot.getProspects>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <assigned>{$ctx:assigned}</assigned>
+                        <assignedToUser>{$ctx:assignedToUser}</assignedToUser>
+                        <deleted>{$ctx:deleted}</deleted>
+                        <gradeEqualTo>{$ctx:gradeEqualTo}</gradeEqualTo>
+                        <gradeGreaterThan>{$ctx:gradeGreaterThan}</gradeGreaterThan>
+                        <gradeLessThan>{$ctx:gradeLessThan}</gradeLessThan>
+                        <isStarred>{$ctx:isStarred}</isStarred>
+                        <lastActivityBefore>{$ctx:lastActivityBefore}</lastActivityBefore>
+                        <lastActivityAfter>{$ctx:lastActivityAfter}</lastActivityAfter>
+                        <lastActivityNever>{$ctx:lastActivityNever}</lastActivityNever>
+                        <listId>{$ctx:listId}</listId>
+                        <new>{$ctx:new}</new>
+                        <scoreEqualTo>{$ctx:scoreEqualTo}</scoreEqualTo>
+                        <scoreGreaterThan>{$ctx:scoreGreaterThan}</scoreGreaterThan>
+                        <scoreLessThan>{$ctx:scoreLessThan}</scoreLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                        <output>{$ctx:output}</output>
+                        <fields>{$ctx:fields}</fields>
+                    </pardot.getProspects>
+                </case>
+                <case regex="urn:getTags">
+                    <pardot.getTags>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <name>{$ctx:name}</name>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                    </pardot.getTags>
+                </case>
+                <case regex="urn:getVisitorActivities">
+                    <pardot.getVisitorActivities>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <prospectOnly>{$ctx:prospectOnly}</prospectOnly>
+                        <type>{$ctx:type}</type>
+                        <campaignId>{$ctx:campaignId}</campaignId>
+                        <customUrlId>{$ctx:customUrlId}</customUrlId>
+                        <emailId>{$ctx:emailId}</emailId>
+                        <fileId>{$ctx:fileId}</fileId>
+                        <formId>{$ctx:formId}</formId>
+                        <formHandlerId>{$ctx:formHandlerId}</formHandlerId>
+                        <landingPageId>{$ctx:landingPageId}</landingPageId>
+                        <prospectId>{$ctx:prospectId}</prospectId>
+                        <visitorId>{$ctx:visitorId}</visitorId>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                        <output>{$ctx:output}</output>
+                    </pardot.getVisitorActivities>
+                </case>
+                <case regex="urn:getVisitors">
+                    <pardot.getVisitors>
+                        <createdAfter>{$ctx:createdAfter}</createdAfter>
+                        <createdBefore>{$ctx:createdBefore}</createdBefore>
+                        <idGreaterThan>{$ctx:idGreaterThan}</idGreaterThan>
+                        <idLessThan>{$ctx:idLessThan}</idLessThan>
+                        <updatedAfter>{$ctx:updatedAfter}</updatedAfter>
+                        <updatedBefore>{$ctx:updatedBefore}</updatedBefore>
+                        <onlyIdentified>{$ctx:onlyIdentified}</onlyIdentified>
+                        <prospectIds>{$ctx:prospectIds}</prospectIds>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                        <sortBy>{$ctx:sortBy}</sortBy>
+                        <sortOrder>{$ctx:sortOrder}</sortOrder>
+                        <output>{$ctx:output}</output>
+                    </pardot.getVisitors>
+                </case>
+                <case regex="urn:getVisits">
+                    <pardot.getVisits>
+                        <ids>{$ctx:ids}</ids>
+                        <visitorIds>{$ctx:visitorIds}</visitorIds>
+                        <prospectIds>{$ctx:prospectIds}</prospectIds>
+                        <limit>{$ctx:limit}</limit>
+                        <offset>{$ctx:offset}</offset>
+                    </pardot.getVisits>
+                </case>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </target>
+</proxy>

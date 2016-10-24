@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 Inc. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<template name="init" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="email" description="The email address of your user account."/>
+    <parameter name="password" description="The password of your user account."/>
+    <parameter name="userKey" description="The 32-bit hexadecimal user key for your user account."/>
+    <parameter name="apiUrl" description="The apiUrl of your user account."/>
+    <parameter name="apiVersion" description="The version of the API."/>
+    <parameter name="format" description="Specifies the format of response."/>
+    <parameter name="blocking" description="Set to true to perform the blocking invocations to Pardot."/>
+    <sequence>
+        <property name="uri.var.email" expression="$func:email"/>
+        <property name="uri.var.password" expression="$func:password"/>
+        <property name="uri.var.userKey" expression="$func:userKey"/>
+        <property name="uri.var.apiUrl" expression="$func:apiUrl"/>
+        <property name="uri.var.apiVersion" expression="$func:apiVersion"/>
+        <property name="uri.var.format" expression="$func:format"/>
+        <property name="pardotBlocking" expression="$func:blocking"/>
+        <script language="js">
+            <![CDATA[
+                var format=mc.getProperty("uri.var.format");
+
+                var urlQuery = '';
+                if (format != null && format != ""){
+                   urlQuery += 'format=' + format;
+                }
+                if (urlQuery != null && urlQuery != ""){
+                   urlQuery = '&' + urlQuery;
+                }
+                mc.setProperty('uri.var.urlQuery',urlQuery);
+            ]]>
+        </script>
+        <filter source="$ctx:pardotBlocking" regex="true">
+            <then>
+                <call>
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{uri.var.apiUrl}/login/version/{uri.var.apiVersion}?email={+uri.var.email}&amp;password={+uri.var.password}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="post"
+                              uri-template="{uri.var.apiUrl}/login/version/{uri.var.apiVersion}?email={+uri.var.email}&amp;password={+uri.var.password}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+        <filter source="$ctx:uri.var.format" regex="json">
+            <then>
+                <filter source="json-eval($.@attributes.stat)" regex="ok">
+                    <then>
+                        <property name="uri.var.apiKey" expression="json-eval($.api_key)"/>
+                    </then>
+                    <else/>
+                </filter>
+            </then>
+            <else>
+                <filter source="//rsp/@stat" regex="ok">
+                    <then>
+                        <property name="uri.var.apiKey" expression="//api_key"/>
+                    </then>
+                    <else/>
+                </filter>
+            </else>
+        </filter>
+    </sequence>
+</template>
