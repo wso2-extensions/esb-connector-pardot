@@ -39,7 +39,7 @@ public class PardotConnectorIntegrationTest extends ConnectorIntegrationTestBase
 
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("pardot-connector-1.0.0-SNAPSHOT");
+        init("pardot-connector-1.0.0");
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/xml");
     }
