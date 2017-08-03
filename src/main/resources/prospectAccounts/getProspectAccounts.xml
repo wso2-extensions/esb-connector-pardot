@@ -106,7 +106,7 @@
         </script>
         <filter source="$ctx:pardotBlocking" regex="true">
             <then>
-                <call>
+                <call blocking="true">
                     <endpoint>
                         <http method="get"
                               uri-template="{uri.var.apiUrl}/prospectAccount/version/{uri.var.apiVersion}/do/query?api_key={+uri.var.apiKey}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>

@@ -48,7 +48,7 @@
         </script>
         <filter source="$ctx:pardotBlocking" regex="true">
             <then>
-                <call>
+                <call blocking="true">
                     <endpoint>
                         <http method="post"
                               uri-template="{uri.var.apiUrl}/login/version/{uri.var.apiVersion}?email={+uri.var.email}&amp;password={+uri.var.password}&amp;user_key={+uri.var.userKey}{+uri.var.urlQuery}"/>
