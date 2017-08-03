@@ -145,6 +145,9 @@
                 if (lastActivityNever != null && lastActivityNever != ""){
                    urlQuery += 'last_activity_never=' + lastActivityNever + '&';
                 }
+                if (listId != null && listId != ""){
+                   urlQuery += 'list_id=' + listId + '&';
+                }
                 if (newVar != null && newVar != ""){
                    urlQuery += 'new=' + newVar + '&';
                 }
