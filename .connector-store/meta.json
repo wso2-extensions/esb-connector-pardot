@@ -4,7 +4,7 @@
     "category": "Sales and Marketing",
     "documentationUrl": "https://docs.wso2.com/display/ESBCONNECTORS/Pardot+Connector",
     "description": "The Pardot connector allows you to access the Pardot REST API through WSO2 ESB. Pardot, B2B marketing automation by Salesforce, offers a marketing automation solution that allows marketing and sales departments to create, deploy, and manage online marketing campaigns.",
-    "status": "Active",
+    "status": "Inactive",
     "labels": [
         "connector"
     ],
